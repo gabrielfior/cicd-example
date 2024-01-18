@@ -1,5 +1,5 @@
-from prefect import flow
-
+from prefect import flow, serve
+from prefect.deployments import DeploymentImage
 
 @flow(log_prints=True)
 def hello():
@@ -7,8 +7,10 @@ def hello():
 
 
 if __name__ == "__main__":
+    # ToDo - Add multiple packages separated by space
     hello.deploy(
-        name="my-deployment",
-        work_pool_name="my-work-pool",
-        image="kevingrismoreprefect/cicd-example:latest",
+        name="my-deployment1234", 
+        work_pool_name="my-managed-pool", 
+        image="prefecthq/prefect:2-python3.11",
+        job_variables={"env": {"EXTRA_PIP_PACKAGES": "python-dotenv"} },
     )
